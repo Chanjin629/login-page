@@ -4,7 +4,33 @@ import axios from 'axios';
 import { useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 
-function RightMenu(props) {
+const items = [
+  {
+    label: <a href="/">Home</a>,
+    key: "home",
+  },
+  {
+    label: "Blog",
+    key: 'blog',
+  },
+  {
+    label: <a href="/login">Sign in</a>,
+    key: 'mail'
+  },
+  {
+    label: <a href="/register">Sign up</a>,
+    key: 'app'
+  },
+];
+
+const logoutItem = [
+  {
+    label:  <a href="/">Logout</a>,
+    key: 'logout'
+  },
+];
+
+function RightMenu() {
   const user = useSelector(state => state.user);
   const navigate = useNavigate();
 
@@ -19,24 +45,11 @@ function RightMenu(props) {
   };
 
   if (user.userData && !user.userData.isAuth) {
-    return (
-      <Menu mode={props.mode}>
-        <Menu.Item key="mail">
-          <a href="/login">Signin</a>
-        </Menu.Item>
-        <Menu.Item key="app">
-          <a href="/register">Signup</a>
-        </Menu.Item>
-      </Menu>
-    )
+    return <Menu mode="horizontal" items={items}/>;
+    
   } else {
-    return (
-      <Menu mode={props.mode}>
-        <Menu.Item key="logout">
-          <a onClick={logoutHandler}>Logout</a>
-        </Menu.Item>
-      </Menu>
-    )
+    return <Menu mode="horizontal" items={logoutItem} onClick={logoutHandler}/>;
+    
   }
 }
 
